@@ -145,7 +145,6 @@ $show_currencies = TRUE; // Should the \'currencies\' tab be displayed on charac
 $bestiary = FALSE; // Temporary, so that Bestiary doesn\'t show up in the menu bar
 $ah = FALSE; // Temporary, so that Auction House doesn\'t show up in the menu bar
 $items = FALSE; // Temporary, so that items don\'t show up in the menu bar
-$messages = FALSE; // Temporary, so that messages don\'t show up in the menu bar
 $friends = FALSE; // Temporary, so that the friends list doesn\'t show up
 $tickets = FALSE; // Temporary, so that tickets don\'t show up in the menu bar
 ?>';

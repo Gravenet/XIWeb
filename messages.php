@@ -24,15 +24,16 @@ if (defined('INSTALLED')) {
     
     if (!empty($_GET['a']) && ($_GET['a'] == 'compose')) {
       include_once('includes/messages_compose.php');
+      $page = 'messages_compose.php';
+    }
+    elseif (!empty($_GET['id'])) {
+      $id = $_GET['id'];
+      include_once('includes/messages_read.php');
+      $page = 'messages_read.php';
     }
     else {
-      if (!empty($_GET['cid'])) {
-        $cid = $_GET['cid'];
-        include_once('includes/messages_read.php');
-      }
-      else {
         include_once('includes/messages.php');
-      }
+        $page = 'messages.php';
     }
   }
 }
@@ -44,7 +45,7 @@ else {
 
 include_once('themes/'.$theme.'/views/header.php');
 include_once('themes/'.$theme.'/views/nav.php');
-include_once('themes/'.$theme.'/views/messages.php');
+include_once('themes/'.$theme.'/views/'.$page);
 include_once('themes/'.$theme.'/views/footer.php');
 echo $output;
 ?>
