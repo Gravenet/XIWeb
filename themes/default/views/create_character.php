@@ -185,28 +185,26 @@ $output .= '
       </form>
     </div>
     <div id="faces" class="uk-modal">
-      <div class="uk-modal-dialog uk-modal-dialog-large">
-        <div class="uk-overflow-container">
+      <div class="uk-modal-dialog">
           <a class="uk-modal-close uk-close"></a>
           <div class="uk-panel-title"><i class="uk-icon uk-icon-eye"></i> Character Faces</div>
           <hr class="uk-panel-divider" />
           <table style="width: 100%">
-            <tr>
-              <td><div class="style1"><strong><span>- Elvaan -<br>
-                <img alt="Elvaan" src="themes/default/images/Elvaan%20Faces.jpg" width="957" height="415"></span></strong></div>
-              <div><hr><br><strong><span>- Hume -<br>
-                <img alt="Hume" src="themes/default/images/Hume%20Faces.jpg" width="960" height="415"></span></strong><br></div>
-              <div><hr><br><strong><span>- Tarutaru -<br>
-                <img alt="Tarutaru" src="themes/default/images/Tarutaru%20Faces.jpg" width="960" height="416"></span></strong><br></div>
-              <div><hr><br><strong><span>- Mithra -<br>
-                <img alt="Mithra" src="themes/default/images/Mithra%20Faces.jpg" width="981" height="211"></span></strong><br></div>
-              <div><hr><br><strong><span>- Galka -<br>
-                <img alt="Galka" src="themes/default/images/Galka%20Faces.jpg" width="984" height="212"></span></strong><br></div>
-              <div><hr></div>
-              </td>
-            </tr>
-          </table>
-        </div>
+          <tr>
+            <td><div class="style1"><strong><span>- Elvaan -<br>
+              <img alt="Elvaan" src="themes/default/images/Elvaan%20Faces.jpg" width="957" height="415"></span></strong></div>
+            <div><hr><br><strong><span>- Hume -<br>
+              <img alt="Hume" src="themes/default/images/Hume%20Faces.jpg" width="960" height="415"></span></strong><br></div>
+            <div><hr><br><strong><span>- Tarutaru -<br>
+              <img alt="Tarutaru" src="themes/default/images/Tarutaru%20Faces.jpg" width="960" height="416"></span></strong><br></div>
+            <div><hr><br><strong><span>- Mithra -<br>
+              <img alt="Mithra" src="themes/default/images/Mithra%20Faces.jpg" width="981" height="211"></span></strong><br></div>
+            <div><hr><br><strong><span>- Galka -<br>
+              <img alt="Galka" src="themes/default/images/Galka%20Faces.jpg" width="984" height="212"></span></strong><br></div>
+            <div><hr></div>
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
 ';
