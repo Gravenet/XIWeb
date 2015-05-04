@@ -1,40 +1,32 @@
 <?php
 
-// We are on the message thread page, let's get the messages available for this conversation
+$message_error = array();
 
-$strSQL = "SELECT * FROM messages WHERE cid = :cID ORDER BY timestamp ASC";
-$statement = $xi->prepare($strSQL);
-$statement->bindValue(':cID',$cid);
-
-if (!$statement->execute()) {
-  watchdog($statement->errorInfo(),'SQL');
+if ($_GET['id'] == 0) {
+  header("Location: messages.php");
 }
 else {
-  $messages = $statement->fetchAll(PDO::FETCH_ASSOC);
-  if (!empty($messages)) {
-    // Let's mark all messages in this thread as read
-    markMessagesRead($cid);
+  $strSQL = "SELECT * FROM messages JOIN users_messages ON messages.message_id=users_messages.message_id WHERE messages.message_id=:mID AND users_messages.user_id=".getAccountID($_SESSION['auth']['username'])."";
+  $statement = $xi->prepare($strSQL);
+  
+  $statement->bindValue(':mID',$id);
+  
+  if (!$statement->execute()) {
+    watchdog($statement->errorInfo(),'SQL');
+    $message_error[] = 'An error occurred recovering the message.';
   }
-}
-
-if (!empty($_POST['send_message'])) {
-  if (!empty($_POST['message'])) {
-    $strSQL = "INSERT INTO messages (`cid`,`status`,`timestamp`,`sender`,`receiver`,`body`) VALUES (:cID,'0',:time,:sender,:receiver,:body)";
-    $statement = $xi->prepare($strSQL);
-    $statement->bindValue(':cID',$cid);
-    $statement->bindValue(':time',time());
-    $statement->bindValue(':sender',getAccountId($_SESSION['auth']['username']));
-    $statement->bindValue(':receiver',getRecipient($cid,getAccountId($_SESSION['auth']['username'])));
-    $statement->bindValue(':body',$_POST['message']);
+  else {
+    $arrayInfo = $statement->fetchAll(PDO::FETCH_ASSOC);
     
-    if (!$statement->execute()) {
-      watchdog($statement->errorInfo(),'SQL');
+    if (!empty($arrayInfo)) {
+      $message = $arrayInfo;
+      $_SESSION['replyto'] = $message[0]['sender_id'];
+      markMessageRead(getAccountID($_SESSION['auth']['username']),$message[0]['message_id']);
     }
     else {
-      header("Location: ". $_SERVER['REQUEST_URI']);
+      $message_error[] = 'Could not retrieve message.';
     }
   }
 }
 
-$page = 'messages read';
 ?>

@@ -1,6 +1,50 @@
 <?php
 #ini_set("display_errors","Off");
 
+function getFriendOnlineFriendCount($id) {
+  $friend_list = getFriendsList($id);
+  
+}
+
+function getFriendsList($id) {
+  global $xi;
+  
+  $strSQL = "SELECT * FROM friends WHERE (`fid` = :uID OR `uid` = :uID) AND status = 1";
+  $statement = $xi->prepare($strSQL);
+  
+  $statement->bindValue(':uID',getAccountID($_SESSION['auth']['username']));
+  $statement->bindValue(':uID',getAccountID($_SESSION['auth']['username']));
+  
+  if (!$statement->execute()) {
+    watchdog($statement->errorInfo(),'SQL');
+  }
+  else {
+    $friend_list = $statement->fetchAll(PDO::FETCH_ASSOC);
+    return $friend_list;
+  }
+}
+
+function getFriendRequests($id) {
+  global $xi;
+  
+  $strSQL = "SELECT * FROM friends WHERE `uid` = :uID AND status = 0";
+  $statement = $xi->prepare($strSQL);
+  
+  $statement->bindValue(':uID',$_SESSION['auth']['username']);
+  
+  if (!$statement->execute()) {
+    watchdog($statement->errorInfo(),'SQL');
+  }
+  else {
+    $friend_requests = $statement->fetchAll(PDO::FETCH_ASSOC);
+    return $friend_requests;
+  }
+}
+
+function isFriend() {
+  return TRUE;
+}
+
 function doLogin($username,$password) {
   global $db;
 
@@ -1148,8 +1192,38 @@ function getRegionName($region) {
   
 }
 
-function getNewMessageCount() {
-  return 0;
+function markMessageRead($uid,$mid) {
+global $xi;
+  
+  $strSQL = "UPDATE users_messages SET status=1 WHERE message_id=:mID AND user_id=:uID";
+  $statement = $xi->prepare($strSQL);
+  $statement->bindValue(':uID',$uid);
+  $statement->bindValue(':mID',$mid);
+  
+   $statement->execute();
+}
+
+function getNewMessageCount($id) {
+  global $xi;
+  
+  $strSQL = "select COUNT(*) AS total FROM users_messages WHERE user_id = :userID AND status=0";
+  $statement = $xi->prepare($strSQL);
+  $statement->bindValue(':userID',$id);
+  
+  if (!$statement->execute()) {
+    watchdog($statement->errorInfo(),'SQL');
+    return 0;
+  }
+  else {
+    $arrRet = $statement->fetchAll(PDO::FETCH_ASSOC);
+    
+    if (!empty($arrRet)) {
+      return $arrRet[0]['total'];
+    }
+    else {
+      return 0;
+    }
+  }
 }
 
 function watchdog($error,$type) {
