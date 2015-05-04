@@ -59,17 +59,17 @@ if (!empty($_SESSION['auth'])) {
         </ul>
         <div class="uk-navbar-flip">
           <ul class="uk-navbar-nav">
-            <li class="uk-parent" data-uk-dropdown>
+            '.($messages ? '<li class="uk-parent" data-uk-dropdown>
               <a href="messages.php"><i class="uk-icon uk-icon-envelope"></i> Messages <i class="uk-icon-caret-down"></i></a>
               <div class="uk-dropdown uk-dropdown-navbar">
                 <ul class="uk-nav uk-nav-navbar">
-                    <li><a href="messages.php?a=compose"><i class="uk-icon uk-icon-plus"></i> New Message</a></li>
+                    <li><a href="#"><i class="uk-icon uk-icon-plus"></i> New Message</a></li>
                     <li class="uk-nav-divider"></li>
                     <li class="uk-nav-header">MESSAGING</li>
                     <li><a href="messages.php"><i class="uk-icon uk-icon-envelope-o"></i> '.getNewMessageCount(getAccountID($_SESSION['auth']['username'])).' new messages</a></li>
                 </ul>
               </div>
-            </li>
+            </li>' : '').'
             '.($friends ? '<li><a href="#my-id" data-uk-offcanvas><i class="uk-icon uk-icon-heart"></i> Friends</a></li>' : '').'
           </ul>
         </div>
